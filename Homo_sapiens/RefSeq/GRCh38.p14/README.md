@@ -13,12 +13,22 @@
 
 ## Snippets
 
+### GFF to GTF
+
+GTF2.2 file format [does not play](https://github.com/gpertea/gffread/issues/84) nice with legacy feature readers.
+
+```
+gffread \\
+  -T GCF_000001405.40_GRCh38.p14_genomic.gff \\
+  -o GCF_000001405.40_GRCh38.p14_genomic.conv.gtf
+```
+
 ### Generate Transcript FASTA
 
 ```bash
 
 genome_ref=GCF_000001405.40_GRCh38.p14_genomic.fna
-gtf=GCF_000001405.40_GRCh38.p14_genomic.gtf
+gtf=GCF_000001405.40_GRCh38.p14_genomic.conv.gtf
 
 rsem-prepare-reference \\
     --gtf $gtf \\
@@ -32,14 +42,14 @@ rsem-prepare-reference \\
 
 ```bash
 genome_ref=GCF_000001405.40_GRCh38.p14_genomic.fna
-gtf=GCF_000001405.40_GRCh38.p14_genomic.gtf
+gtf=GCF_000001405.40_GRCh38.p14_genomic.conv.gtf
 
-STAR \\
+./STAR-2.7.4a/bin/Linux_x86_64_static/STAR \\
     --runMode genomeGenerate \\
     --genomeDir star/ \\
     --genomeFastaFiles $genome_ref \\
     --sjdbGTFfile $gtf \\
-    --runThreadN 96 \\
+    --runThreadN 96 
 ```
 
 ### salmon index
